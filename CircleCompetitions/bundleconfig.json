@@ -1,0 +1,21 @@
+[  
+  {
+    "outputFileName": "wwwroot/css/__Layout/MasterStyle.min.css",
+    "inputFiles": [
+      "wwwroot/css/__Layout/MasterStyle.css"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  }
+  //{
+  //  "outputFileName": "wwwroot/js/__Layout/MasterPage.min.jsx",
+  //  "inputFiles": [
+  //    "wwwroot/js/__Layout/MasterPageHeaderScript.jsx"
+  //  ],
+  //  "minify": {
+  //    "enabled": true,
+  //    "renameLocals": true
+  //  }
+  //}
+]
