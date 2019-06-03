@@ -13,6 +13,7 @@ namespace CircleCompetitions.Models
         public string UserName { get; set; }
         public string Nickname { get; set; }
         public string E_Mail { get; set; }
+        public string Password { get; set; }
         public string RightsOfUser { get; set; }
     }
 }

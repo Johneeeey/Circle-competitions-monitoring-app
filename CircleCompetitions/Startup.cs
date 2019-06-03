@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
@@ -22,19 +23,29 @@ namespace CircleCompetitions
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
             string conn = Configuration.GetConnectionString("DataQueryConn");
             services.AddDbContext<DataContext>(options => options.UseSqlServer(conn));
+
+            // установка конфигурации подключения
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => //CookieAuthenticationOptions
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Home/Login");
+                });
         }
         
         public void Configure(IApplicationBuilder app)
         {
             app.UseStaticFiles();
+            app.UseAuthentication();
+            app.UseHttpsRedirection();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}");
             });
         }
     }

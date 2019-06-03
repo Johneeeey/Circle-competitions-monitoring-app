@@ -1,24 +1,5 @@
 ﻿class MasterPageHeader extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            Data: [],
-        };
-        this.props = {
-            requestAddress: '',
-        };
-
-    }
-    loadData() {
-        fetch(this.props.requestAddress).then(results => { return results.json() }).then(data => {
-            this.setState({ Data: data });
-        }).catch(() => {
-            alert('Error');
-        });
-    }
-    componentWillMount() {
-        this.loadData();
-    }
+    
     render() {
         return (
             <nav className="navbar navbar-default">
@@ -29,7 +10,7 @@
                     <div>
                         <ul className="nav navbar-nav">
                             <li className="active"><a href="#">Главная</a></li>
-                            <li><a href="#">Войти/Зарегистрироваться</a></li>
+                            <li><a href="Home/Login">Профиль</a></li>
                             <li><a href="#">Администрирование</a></li> 
                         </ul>
                     </div>
@@ -39,4 +20,4 @@
     }
 }
 
-ReactDOM.render(<MasterPageHeader requestAddress="/Home/GetUserInfo" />, document.getElementById('MasterHeader'))
+ReactDOM.render(<MasterPageHeader />, document.getElementById('MasterHeader'))
