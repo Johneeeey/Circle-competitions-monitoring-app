@@ -1,0 +1,15 @@
+﻿
+@{
+    Layout = "~/Views/Shared/__Layout.cshtml";
+}
+<head>
+    <link href="~/css/__Layout/CommonLayout.css" rel="stylesheet" />
+</head>
+<header id="MasterHeader">
+    <script type="text/babel" src="~/js/__Layout/MasterPageHeaderScript.jsx" asp-append-version="true">
+    </script>
+</header>
+<div id="MasterRenderBody">
+    @RenderBody()
+</div>
+<footer id="MasterFooter"></footer>

@@ -1,21 +1,21 @@
-[  
+[
   {
-    "outputFileName": "wwwroot/css/__Layout/MasterStyle.min.css",
+    "outputFileName": "wwwroot/css/__Layout/_Layout.min.css",
     "inputFiles": [
-      "wwwroot/css/__Layout/MasterStyle.css"
+      "wwwroot/css/__Layout/CommonLayout.css"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/css/Home/Home.min.css",
+    "inputFiles": [
+      "wwwroot/css/Home/Login.css",
+      "wwwroot/css/Home/LoginErrorStyle.css"
     ],
     "minify": {
       "enabled": true
     }
   }
-  //{
-  //  "outputFileName": "wwwroot/js/__Layout/MasterPage.min.jsx",
-  //  "inputFiles": [
-  //    "wwwroot/js/__Layout/MasterPageHeaderScript.jsx"
-  //  ],
-  //  "minify": {
-  //    "enabled": true,
-  //    "renameLocals": true
-  //  }
-  //}
 ]

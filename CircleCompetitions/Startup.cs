@@ -22,17 +22,15 @@ namespace CircleCompetitions
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
 
             string conn = Configuration.GetConnectionString("DataQueryConn");
             services.AddDbContext<DataContext>(options => options.UseSqlServer(conn));
 
             // установка конфигурации подключения
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options => //CookieAuthenticationOptions
-                {
-                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Home/Login");
-                });
+                .AddCookie();
+
+            services.AddMvc();
         }
         
         public void Configure(IApplicationBuilder app)
@@ -45,7 +43,7 @@ namespace CircleCompetitions
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}");
+                    template: "{controller=Home}/{action=Login}");
             });
         }
     }

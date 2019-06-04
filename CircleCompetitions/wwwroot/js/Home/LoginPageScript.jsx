@@ -1,7 +1,7 @@
 ﻿class LoginForm extends React.Component {
     render() {
         return (
-            <div className="container-fluid">
+            <div className="container-fluid" id="LoginForm">
                 <form method="post">
                     <div className="form-group">
                         <label>E-mail адрес</label>
