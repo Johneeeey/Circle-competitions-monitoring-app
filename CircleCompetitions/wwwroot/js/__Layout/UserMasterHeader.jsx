@@ -2,8 +2,8 @@
     render() {
         return (
             <ul className="nav navbar-nav">
-                <li><a href="Home/Index">Главная</a></li>
-                <li><a href="Home/Profile">Профиль</a></li>
+                <li><a href="/Home/Index">Главная</a></li>
+                <li><a href="/Home/Profile">Профиль</a></li>
             </ul> 
         )
     }
