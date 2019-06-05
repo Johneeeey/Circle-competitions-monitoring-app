@@ -8,6 +8,7 @@ using CircleCompetitions.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
+using CircleCompetitions.Models;
 
 namespace CircleCompetitions.Controllers
 {
@@ -19,17 +20,30 @@ namespace CircleCompetitions.Controllers
             db = dataContext;
         }
 
+        /*Методы на возврат данных*/
+        [Authorize(Roles = "Admin, User")]
+        public IEnumerable<Competition> GetCompetitions()
+        {
+            return db.Competition.ToList();
+        }
+
+        /*Методы на возвращение представление*/
         [Authorize(Roles = "Admin, User")]
         public IActionResult Index()
         {
             return View();
         }
-
         [HttpGet]
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
+
+        /*Post методы*/
         [HttpPost]
         public async Task<IActionResult> Login(string EMail, string Password)
         {
