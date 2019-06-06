@@ -23,6 +23,39 @@
             <div className="container">
                 <div className="container-fluid">
                     <h1>Предстоящие события</h1>
+                    <table className="table table-hover table-bordered" id="FutureEvents">
+                        <thead>
+                            <tr>
+                                <th>Наименование</th>
+                                <th>Вид соревнования</th>
+                                <th>Возрастное ограничение</th>
+                                <th>Даты проведения</th>
+                                <th>                    </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.Competitions.map(item => {
+                                var dateOfStart = new Date(item.dateOfStart);
+                                var today = new Date();
+                                if (dateOfStart > today) {
+                                    var adr = "/Result/Completed/?CompetitionID=" + item.iD_Competition;
+                                    return (
+                                        <tr key={item.iD_Competition} >
+                                            <td>{item.nameOfCompetition}</td>
+                                            <td>{item.typeOfCompetition}</td>
+                                            <td>{item.ageLimit}</td>
+                                            <td>{item.dateOfStart}</td>
+                                            <td>
+                                                <a href="#"><button type="button" className="btn btn-info" id="ButtonMainPageTable">Принять участие</button></a>
+                                            </td>
+                                        </tr>
+                                    )
+                                }
+                            })
+                            }
+                        </tbody>
+                    </table>
+
                 </div>
                 <div className="container-fluid">
                     <h1>Завершенные события</h1>
