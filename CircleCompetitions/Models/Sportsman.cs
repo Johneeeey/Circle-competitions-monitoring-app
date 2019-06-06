@@ -12,7 +12,7 @@ namespace CircleCompetitions.Models
         public int ID_Sportsman { get; set; }
         public string SportsmanName { get; set; }
         public string SportsmanSurname { get; set; }
-        public string SpotrsmanPatronymic { get; set; }
+        public string SportsmanPatronymic { get; set; }
         public char Sex { get; set; }
         public DateTime YearOfBirth { get; set; }
         public string Team { get; set; }

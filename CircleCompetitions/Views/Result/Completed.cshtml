@@ -1,0 +1,18 @@
+﻿@using System.Security.Claims
+@{
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+@if (User.IsInRole("User"))
+{
+    @:<script type="text/babel" src="/js/__Layout/UserMasterHeader.jsx" asp-append-version="true"></script>
+}
+else if (User.IsInRole("Admin"))
+{
+    @:<script type="text/babel" src="/js/__Layout/AdminMasterHeader.jsx" asp-append-version="true"></script>
+}
+<head>
+    <link href="~/css/Result/Completed.css" rel="stylesheet" />
+</head>
+<div id="CompletedResultDiv">
+    <script type="text/babel" src="~/js/Result/Completed.jsx" asp-append-version="true"></script>
+</div>
