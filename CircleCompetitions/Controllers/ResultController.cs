@@ -37,6 +37,7 @@ namespace CircleCompetitions.Controllers
         }
         [HttpGet]
         [Authorize(Roles = "Admin, User")]
+        //КОСЯК ЗДЕСЬ
         public IEnumerable<Sportsman> GetSportsmen()
         {
             List<Sportsman> Sportsmen = new List<Sportsman>();
@@ -57,7 +58,36 @@ namespace CircleCompetitions.Controllers
             Competition.Add(db.Competition.FirstOrDefault(c => c.ID_Competition == CompetitionID));
             return Competition;
         }
+        [HttpGet]
+        [Authorize(Roles ="Admin, User")]
+        public IEnumerable<Stage> GetStages()
+        {
+            List<Stage> Stages = new List<Stage>();
+            foreach(Stage stage in db.Stage.ToList())
+            {
+                if(stage.Competition_ID == CompetitionID)
+                {
+                    Stages.Add(stage);
+                }
+            }
+            return Stages;
+        }
+        [HttpGet]
+        [Authorize(Roles = "Admin, User")]
+        public IEnumerable<Circle> GetCircles()
+        {
+            List<Circle> Circles = new List<Circle>();
+            foreach(Circle circle in db.Circle.ToList())
+            {
+                if (circle.Competition_ID == CompetitionID)
+                {
+                    Circles.Add(circle);
+                }
+            }
+            return Circles;
+        }
 
+        /*Методы на возврат представлений*/
         [HttpGet]
         [Authorize(Roles = "Admin, User")]
         public IActionResult Completed(int IDCompetition)
