@@ -92,13 +92,13 @@
                                                         <tr>
                                                             <td>{c.circleNumber}</td>
                                                             <td>
-                                                                {s.sportsmanSurname} {s.sportsmanName} {s.sportsmanPatronymic}<br />
+                                                                {sp.sportsmanSurname} {sp.sportsmanName} {sp.sportsmanPatronymic}<br />
                                                             </td>
-                                                            <td>{s.team}</td>
-                                                            <td>{s.iD_Sportsman}</td>
-                                                            <td>{s.yearOfBirth}</td>
+                                                            <td>{sp.team}</td>
+                                                            <td>{sp.iD_Sportsman}</td>
+                                                            <td>{sp.yearOfBirth}</td>
                                                             <td>{c.timeOfCircle}</td>
-                                                            <td>{r.place}</td>
+                                                            <td>{c.place}</td>
                                                         </tr>
                                                     )
                                                 }
