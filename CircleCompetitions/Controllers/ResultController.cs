@@ -37,7 +37,6 @@ namespace CircleCompetitions.Controllers
         }
         [HttpGet]
         [Authorize(Roles = "Admin, User")]
-        //КОСЯК ЗДЕСЬ
         public IEnumerable<Sportsman> GetSportsmen()
         {
             List<Sportsman> Sportsmen = new List<Sportsman>();

@@ -74,7 +74,7 @@
                                 var dateOfEnd = new Date(item.dateOfEnd);
                                 var today = new Date();
                                 if (dateOfEnd < today) {
-                                    var adr = "/Result/Completed/?CompetitionID=" + item.iD_Competition;
+                                    var adr = "/Result/Completed/?IDCompetition=" + item.iD_Competition;
                                     return (
                                         <tr key={item.iD_Competition} >
                                             <td>{item.nameOfCompetition}</td>
@@ -82,7 +82,7 @@
                                             <td>{item.ageLimit}</td>
                                             <td>{item.dateOfStart} - {item.dateOfEnd}</td>
                                             <td>
-                                                <a href="#"><button type="button" className="btn btn-info" id="ButtonMainPageTable">Посмотреть</button></a>
+                                                <a href={adr}><button type="button" className="btn btn-info" id="ButtonMainPageTable">Посмотреть</button></a>
                                             </td>
                                         </tr>
                                     )
