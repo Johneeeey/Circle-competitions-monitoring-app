@@ -63,11 +63,13 @@ namespace CircleCompetitions.Controllers
         public IEnumerable<Stage> GetStages()
         {
             List<Stage> Stages = new List<Stage>();
-            foreach(Stage stage in db.Stage.ToList())
+            //int temp = 0;
+            foreach (Stage stage in db.Stage.ToList())
             {
-                if(stage.Competition_ID == CompetitionID)
+                if(stage.Competition_ID == CompetitionID /*&& stage.StageNumber != temp*/)
                 {
                     Stages.Add(stage);
+                    //temp = stage.StageNumber;
                 }
             }
             return Stages;
@@ -77,7 +79,7 @@ namespace CircleCompetitions.Controllers
         public IEnumerable<Circle> GetCircles()
         {
             List<Circle> Circles = new List<Circle>();
-            foreach(Circle circle in db.Circle.ToList())
+            foreach(Circle circle in db.Circle.OrderBy(c => c.Stage_ID).ToList())
             {
                 if (circle.Competition_ID == CompetitionID)
                 {
@@ -102,5 +104,6 @@ namespace CircleCompetitions.Controllers
             //this.CompetitionID = CompetitionID;
             return View();
         }
+        
     }
 }
