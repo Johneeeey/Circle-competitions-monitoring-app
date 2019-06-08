@@ -1,0 +1,10 @@
+﻿#CompetitionName{
+    text-align: center;
+}
+#CompetitionDate{
+    text-align: right;
+}
+#ButtonCompletedPageTable{
+    width: 100%;
+    height: 100%;
+}

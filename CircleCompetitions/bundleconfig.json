@@ -11,8 +11,18 @@
   {
     "outputFileName": "wwwroot/css/Home/Home.min.css",
     "inputFiles": [
+      "wwwroot/css/Home/Index.css",
       "wwwroot/css/Home/Login.css",
       "wwwroot/css/Home/LoginErrorStyle.css"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/css/Result/Result.min.css",
+    "inputFiles": [
+      "wwwroot/css/Result/Completed.css"
     ],
     "minify": {
       "enabled": true
