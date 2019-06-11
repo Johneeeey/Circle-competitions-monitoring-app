@@ -22,7 +22,8 @@
   {
     "outputFileName": "wwwroot/css/Result/Result.min.css",
     "inputFiles": [
-      "wwwroot/css/Result/Completed.css"
+      "wwwroot/css/Result/Completed.css",
+      "wwwroot/css/Result/MakeChanges.css"
     ],
     "minify": {
       "enabled": true
