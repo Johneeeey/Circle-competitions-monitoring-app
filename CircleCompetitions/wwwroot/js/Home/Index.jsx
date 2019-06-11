@@ -74,7 +74,7 @@
                                 var dateOfEnd = new Date(item.dateOfEnd);
                                 var today = new Date();
                                 if (dateOfEnd < today) {
-                                    var adr = "/Result/Completed/?IDCompetition=" + item.iD_Competition;
+                                    var adr = "/Result/Index/?IDCompetition=" + item.iD_Competition;
                                     return (
                                         <tr key={item.iD_Competition} >
                                             <td>{item.nameOfCompetition}</td>
@@ -110,7 +110,7 @@
                                 var dateOfEnd = new Date(item.dateOfEnd);
                                 var today = new Date();
                                 if (dateOfStart <= today && dateOfEnd >= today) {
-                                    var adr = "/Result/DetailedLive/?IDCompetition=" + item.iD_Competition;
+                                    var adr = "/Result/Index/?IDCompetition=" + item.iD_Competition;
                                     return (
                                         <tr key={item.iD_Competition} >
                                             <td>{item.nameOfCompetition}</td>

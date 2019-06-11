@@ -54,55 +54,55 @@
     render() {
         return (
             this.state.Competition.map(item => {//Заголовок страницы                
-            return (
-                <div className="container">
-                    <div key={item.iD_Competition}>
-                        <h1 key={item.iD_Competition} id="CompetitionName">"{item.nameOfCompetition}"</h1>
-                        <h3 key={item.iD_Competition} id="CompetitionDate">
+                return (
+                    <div key={"rDiv" + item.iD_Competition} className="container">
+                    <div key={"hDiv" + item.iD_Competition}>
+                        <h1 key="h1" id="CompetitionName">"{item.nameOfCompetition}"</h1>
+                        <h3 key="h3" id="CompetitionDate">
                             {item.dateOfStart} - <br />
                             {item.dateOfEnd}
                         </h3>
                     </div>
-                    <div>
-                        <table className="table table-hover table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Номер стадии</th>
-                                    <th>Номер круга</th>
-                                    <th>ФИО</th>
-                                    <th>Команда</th>
-                                    <th>Личный номер</th>
-                                    <th>Год рождения</th>
-                                    <th>Время круга</th>
-                                    <th>Место</th>
+                    <div key={"bDiv" + item.iD_Competition}>
+                        <table key={"t" + item.iD_Competition} className="table table-hover table-bordered">
+                            <thead key={"th" + item.iD_Competition}>
+                                <tr key={"trh" + item.iD_Competition}>
+                                    <th key={"th1" + item.iD_Competition}>Номер стадии</th>
+                                    <th key={"th2" + item.iD_Competition}>Номер круга</th>
+                                    <th key={"th3" + item.iD_Competition}>ФИО</th>
+                                    <th key={"th4" + item.iD_Competition}>Команда</th>
+                                    <th key={"th5" + item.iD_Competition}>Личный номер</th>
+                                    <th key={"th6" + item.iD_Competition}>Год рождения</th>
+                                    <th key={"th7" + item.iD_Competition}>Время круга</th>
+                                    <th key={"th8" + item.iD_Competition}>Место</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody key={"tb" + item.iD_Competition}>
                                 {this.state.Circles.map(c => {
                                     return (
                                         this.state.Sportsmen.map(sp => {
                                             if (sp.iD_Sportsman == c.sportsman_ID) {
                                                 return (
-                                                    <tr key={c.iD_Circle}>
-                                                        <td>
+                                                    <tr key={"trb" + item.iD_Competition}>
+                                                        <td key={"td1" + item.iD_Competition}>
                                                             {this.state.Stages.map(st => {
                                                                 if (st.iD_Stage == c.stage_ID) {
                                                                     return (
-                                                                        <b>{st.stageNumber}</b>
+                                                                        <b key={"b" + item.iD_Competition} > { st.stageNumber }</b>
                                                                     )
                                                                 }
                                                             })
                                                             }
                                                         </td>
-                                                        <td>{c.circleNumber}</td>
-                                                        <td>
+                                                        <td key={"td2" + item.iD_Competition}>{c.circleNumber}</td>
+                                                        <td key={"td3" + item.iD_Competition}>
                                                             {sp.sportsmanSurname} {sp.sportsmanName} {sp.sportsmanPatronymic}<br />
                                                         </td>
-                                                        <td>{sp.team}</td>
-                                                        <td>{sp.iD_Sportsman}</td>
-                                                        <td>{sp.yearOfBirth}</td>
-                                                        <td>{c.timeOfCircle}</td>
-                                                        <td>{c.place}</td>
+                                                        <td key={"td4" + item.iD_Competition}>{sp.team}</td>
+                                                        <td key={"td5" + item.iD_Competition}>{sp.iD_Sportsman}</td>
+                                                        <td key={"td6" + item.iD_Competition}>{sp.yearOfBirth}</td>
+                                                        <td key={"td7" + item.iD_Competition}>{c.timeOfCircle}</td>
+                                                        <td key={"td8" + item.iD_Competition}>{c.place}</td>
                                                     </tr>
                                                 )
                                             }

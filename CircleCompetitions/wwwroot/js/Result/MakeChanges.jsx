@@ -53,45 +53,46 @@
     }
     render() {
         return (
-            <table className="table table-hover table-bordered">
-                <thead>
-                    <tr>
-                        <th>№ Стадии</th>
-                        <th>№ Круга</th>
-                        <th>ID Круга></th>
-                        <th>ФИО</th>
-                        <th>Время</th>
-                        <th />
+            <table key="tbl" className="table table-hover table-bordered">
+                <thead key="thd">
+                    <tr key="thr">
+                        <th key="th1">№ Стадии</th>
+                        <th key="th2">№ Круга</th>
+                        <th key="th3">ID Круга></th>
+                        <th key="th4">ФИО</th>
+                        <th key="th5">Время</th>
+                        <th key="th6" />
                     </tr>
                 </thead>
-                <tbody>
+                <tbody key="tbd">
                     {this.state.Circles.map(c => {
                         var adr = "/Result/ChangeCircle?IDCircle=" + c.iD_Circle;
                         return (
                             <tr key={c.iD_Circle}>
-                                <td>
+                                <td key={"td1" + c.iD_Circle}>
                                     {this.state.Stages.map(st => {
                                         if (st.iD_Stage == c.stage_ID) {
                                             return (
-                                                <b>{st.stageNumber}</b>
+                                                <b key={"b" + c.iD_Circle}>{st.stageNumber}</b>
                                             )
                                         }
                                     })
                                     }
                                 </td>
-                                <td>{c.circleNumber}</td>
-                                <td>
-                                    <input name="CircleID"
+                                <td key={"td2" + c.iD_Circle}>{c.circleNumber}</td>
+                                <td key={"td3" + c.iD_Circle}>
+                                    <input key={"tdInp1" + c.iD_Circle}
+                                        name="CircleID"
                                         type="text"
                                         className="form-control"
                                         value={c.iD_Circle}
                                         readOnly></input>
                                 </td>
-                                <td>
+                                <td key={"td4" + c.iD_Circle}>
                                     {this.state.Sportsmen.map(sp => {
                                         if (c.sportsman_ID == sp.iD_Sportsman) {
                                             return (
-                                                <small>
+                                                <small key={"tdSm" + c.iD_Circle}>
                                                     {sp.sportsmanName}<br />
                                                     {sp.sportsmanSurname}<br />
                                                     {sp.sportsmanPatronymic}<br />
@@ -101,14 +102,15 @@
                                     })
                                     }
                                 </td>
-                                <td>
-                                    <input type="text"
+                                <td key={"td5" + c.iD_Circle}>
+                                    <input key={"tdInp2" + c.iD_Circle}
+                                        type="text"
                                         name="CircleTime"
                                         className="form-control"
                                         placeholder={c.timeOfCircle}
                                         readOnly></input>
                                 </td>
-                                <td>
+                                <td key={"td6" + c.iD_Circle}>
                                     <a href={adr}><button className="btn btn-secondary">Изменить</button></a>
                                 </td>
                             </tr>    

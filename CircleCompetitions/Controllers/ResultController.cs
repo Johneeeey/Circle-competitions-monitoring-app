@@ -27,7 +27,7 @@ namespace CircleCompetitions.Controllers
         public IEnumerable<Result> GetResults()
         {
             List<Result> Results = new List<Result>();
-            foreach (Result result in db.Result.ToList())
+            foreach (Result result in db.Result.OrderBy(r => r.Place).ToList())
             {
                 if (result.Competition_ID == CompetitionID)
                 {
@@ -103,8 +103,15 @@ namespace CircleCompetitions.Controllers
 
         /*Методы на возврат представлений*/
         [HttpGet]
+        [Authorize(Roles ="Admin, User")]
+        public IActionResult Index(int IDCompetition)
+        {
+            CompetitionID = IDCompetition;
+            return View("Index");
+        }
+        [HttpGet]
         [Authorize(Roles = "Admin, User")]
-        public IActionResult Completed(int IDCompetition)
+        public IActionResult Detail(int IDCompetition)
         {
             CompetitionID = IDCompetition;
             return View();
@@ -116,14 +123,6 @@ namespace CircleCompetitions.Controllers
         {
             CompetitionID = IDCompetition;
             return View();
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "Admin, User")]
-        public IActionResult DetailedLive(int IDCompetition)
-        {
-            CompetitionID = IDCompetition;
-            return View("Completed");
         }
 
         [HttpGet]
