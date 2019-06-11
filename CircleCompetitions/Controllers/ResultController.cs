@@ -15,6 +15,7 @@ namespace CircleCompetitions.Controllers
     {
         DataContext db;
         static int CompetitionID;
+        static int CircleID;
         public ResultController(DataContext context)
         {
             db = context;
@@ -35,6 +36,7 @@ namespace CircleCompetitions.Controllers
             }
             return Results;
         }
+
         [HttpGet]
         [Authorize(Roles = "Admin, User")]
         public IEnumerable<Sportsman> GetSportsmen()
@@ -49,6 +51,7 @@ namespace CircleCompetitions.Controllers
             }
             return Sportsmen;
         }
+
         [HttpGet]
         [Authorize(Roles = "Admin, User")]
         public IEnumerable<Competition> GetCompetition()
@@ -57,6 +60,7 @@ namespace CircleCompetitions.Controllers
             Competition.Add(db.Competition.FirstOrDefault(c => c.ID_Competition == CompetitionID));
             return Competition;
         }
+
         [HttpGet]
         [Authorize(Roles ="Admin, User")]
         public IEnumerable<Stage> GetStages()
@@ -73,6 +77,7 @@ namespace CircleCompetitions.Controllers
             }
             return Stages;
         }
+
         [HttpGet]
         [Authorize(Roles = "Admin, User")]
         public IEnumerable<Circle> GetCircles()
@@ -88,6 +93,14 @@ namespace CircleCompetitions.Controllers
             return Circles;
         }
 
+        /*Возврат одного круга*/
+        public IEnumerable<Circle> GetCircle()
+        {
+            List<Circle> circle = new List<Circle>();
+            circle.Add(db.Circle.FirstOrDefault(c => c.ID_Circle == CircleID));
+            return circle;
+        }
+
         /*Методы на возврат представлений*/
         [HttpGet]
         [Authorize(Roles = "Admin, User")]
@@ -96,13 +109,153 @@ namespace CircleCompetitions.Controllers
             CompetitionID = IDCompetition;
             return View();
         }
+
         [HttpGet]
-        [Authorize(Roles = "Admin, User")]
-        public IActionResult DetailedLive(int CompetitionID)
+        [Authorize(Roles ="Admin")]
+        public IActionResult MakeChanges(int IDCompetition)
         {
-            //this.CompetitionID = CompetitionID;
+            CompetitionID = IDCompetition;
             return View();
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin, User")]
+        public IActionResult DetailedLive(int IDCompetition)
+        {
+            CompetitionID = IDCompetition;
+            return View("Completed");
+        }
+
+        [HttpGet]
+        [Authorize(Roles ="Admin")]
+        public IActionResult ChangeCircle(int IDCircle)
+        {
+            CircleID = IDCircle;
+            return View();
+        }
+
         
+        /*post-методы*/
+        [HttpPost]
+        [Authorize(Roles ="Admin")]
+        public IActionResult ChangeCircle(int CircleID, TimeSpan CircleTime)
+        {
+            foreach (Circle circle in db.Circle.OrderBy(c => c.Stage_ID).ToList())
+            {
+                if (circle.ID_Circle == CircleID)
+                {
+                    circle.TimeOfCircle = CircleTime;
+                }
+            }
+            db.SaveChanges();
+            CirclePlacecFilter();
+            StagePlaceFilter();
+            ResultPlaceFilter();
+            return RedirectToAction("MakeChanges", "Result", new { IDCompetition = CompetitionID });
+        }
+
+        /*Дополнительные методы*/
+        /*Для расставление мест в круге*/
+        private void CirclePlacecFilter()
+        {
+            int place = 1;
+            List<Circle> circles = new List<Circle>();
+            int circleNum = db.Circle.FirstOrDefault(c => c.ID_Circle == CircleID).CircleNumber;
+            int stageNum = db.Stage.FirstOrDefault(st => st.ID_Stage == db.Circle.FirstOrDefault(c => c.ID_Circle == CircleID).Stage_ID).StageNumber;
+            foreach(Stage stage in db.Stage.Where(st => st.StageNumber == stageNum && st.Competition_ID == CompetitionID))
+            {
+                foreach(Circle circle in db.Circle.Where(c => c.Competition_ID == CompetitionID))
+                {
+                    if (circle.Stage_ID == stage.ID_Stage && circle.CircleNumber == circleNum)
+                        circles.Add(circle);
+                }
+            }
+            foreach(Circle circle in circles.OrderBy(c => c.TimeOfCircle))
+            {
+                circle.Place = place;
+                place++;
+            }
+            db.SaveChanges();
+            //int circleNum = db.Circle.FirstOrDefault(c => c.ID_Circle == CircleID).CircleNumber;
+            //foreach (Circle circle in db.Circle.Where(c => c.CircleNumber == circleNum).OrderBy(c => c.TimeOfCircle))
+            //{
+            //    circle.Place = place;
+            //    place++;
+            //}
+            /*Добавить сохранение и вызов следующего метода*/
+        }
+
+        /*Для расставления мест в стадиях*/
+        private void StagePlaceFilter()
+        {
+            int temp = 0;
+            foreach(Stage stage in db.Stage.Where(st => st.Competition_ID == CompetitionID))
+            {
+                if (stage.StageNumber == temp)
+                    continue;
+                temp = stage.StageNumber;
+                int place = 1;
+                /*Формируем список спортсменов, участвующих в каждой стадии*/
+                Dictionary<int, int> FirstPlaceCountForEachSportsman = new Dictionary<int, int>();
+                foreach(Stage st1 in db.Stage.Where(st => st.StageNumber == stage.StageNumber))
+                {
+                    FirstPlaceCountForEachSportsman.Add(st1.Sportsman_ID, 0);
+                }
+                /*Подсчитываем, сколько раз каждый спорстмен занимал 1 место в ходе стадии*/
+                foreach(Circle circle in db.Circle.Where(c => c.Stage_ID == stage.ID_Stage))
+                {
+                    if (circle.Place == 1)
+                    {
+                        FirstPlaceCountForEachSportsman[circle.Sportsman_ID] += 1;
+                    }
+                }
+                /*Расставляем места в стадии в зависимости от количества занятых 1 мест во время стадии*/
+                foreach(var obj in FirstPlaceCountForEachSportsman.OrderBy(f => f.Value).Reverse())
+                {
+                    foreach(Stage st2 in db.Stage.Where(st => st.StageNumber == stage.StageNumber))
+                    {
+                        if (st2.Sportsman_ID == obj.Key)
+                        {
+                            st2.Place = place;
+                            place++;
+                        }
+                    }
+                }
+                /*Добавить сохранение и вызов следующего метода*/
+            }
+            db.SaveChanges();
+        }
+
+        /*Для расставления мест в финальном результате*/
+        private void ResultPlaceFilter()
+        {
+            int place = 1;
+            Dictionary<int, int> FirstPlaceCountForEachSportsman = new Dictionary<int, int>();
+            /*Считаем, сколько первых мест занимали спортсмены в разных стадиях*/
+            foreach (Stage stage in db.Stage.Where(st => st.Competition_ID == CompetitionID && st.Place == 1).OrderBy(st=>st.Sportsman_ID))
+            {
+                if (FirstPlaceCountForEachSportsman.ContainsKey(stage.Sportsman_ID))
+                {
+                    FirstPlaceCountForEachSportsman[stage.Sportsman_ID] += 1;
+                }
+                else
+                {
+                    FirstPlaceCountForEachSportsman.Add(stage.Sportsman_ID, 1);
+                }
+            }
+            foreach(var obj in FirstPlaceCountForEachSportsman.OrderBy(f => f.Value).Reverse())
+            {
+                foreach(Result result in db.Result.Where(r => r.Competition_ID == CompetitionID))
+                {
+                    if (result.Sportsman_ID == obj.Key)
+                    {
+                        result.Place = place;
+                        place++;
+                    }
+                }
+            }
+            db.SaveChanges();
+            /*Добавить сохранение*/
+        }
     }
 }

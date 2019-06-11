@@ -13,7 +13,8 @@ namespace CircleCompetitions.Models
         public int Competition_ID { get; set; }
         public int Result_ID { get; set; }
         public int Sportsman_ID { get; set; }
+        public int CircleCount { get; set; }
         public int StageNumber { get; set; }
-        public int Place { get; set; }
+        public int? Place { get; set; }
     }
 }

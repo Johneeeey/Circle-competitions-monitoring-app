@@ -28,6 +28,7 @@ namespace CircleCompetitions.Controllers
         }
 
         /*Методы на возвращение представление*/
+        [HttpGet]
         [Authorize(Roles = "Admin, User")]
         public IActionResult Index()
         {
@@ -40,6 +41,12 @@ namespace CircleCompetitions.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            return View();
+        }
+        [HttpGet]
+        [Authorize(Roles ="Admin")]
+        public IActionResult AdminPanel()
+        {
             return View();
         }
 

@@ -7,7 +7,6 @@
             Competition: [],
             Stages: [],
             Circles: [],
-            CheckStages: [],
         };
         this.props = {
             resultsRequestAddress: '',
@@ -51,11 +50,6 @@
     }
     componentWillMount(){
         this.loadData();
-    }
-    updateVal(newVal) {
-        this.setState(prevState => ({
-            CheckStages: [...prevState.CheckStages, newVal]
-        }))
     }
     render() {
         return (

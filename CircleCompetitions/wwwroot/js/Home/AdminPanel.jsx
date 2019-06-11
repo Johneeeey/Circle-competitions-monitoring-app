@@ -1,4 +1,4 @@
-﻿class MainPageDesign extends React.Component {
+﻿class AdminPanelDesign extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,42 +22,6 @@
         return (
             <div className="container">
                 <div className="container-fluid">
-                    <h1>Предстоящие события</h1>
-                    <table className="table table-hover table-bordered" id="FutureEvents">
-                        <thead>
-                            <tr>
-                                <th>Наименование</th>
-                                <th>Вид соревнования</th>
-                                <th>Возрастное ограничение</th>
-                                <th>Даты проведения</th>
-                                <th>                    </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.Competitions.map(item => {
-                                var dateOfStart = new Date(item.dateOfStart);
-                                var today = new Date();
-                                if (dateOfStart > today) {
-                                    var adr = "/Result/Completed/?CompetitionID=" + item.iD_Competition;
-                                    return (
-                                        <tr key={item.iD_Competition} >
-                                            <td>{item.nameOfCompetition}</td>
-                                            <td>{item.typeOfCompetition}</td>
-                                            <td>{item.ageLimit}</td>
-                                            <td>{item.dateOfStart}</td>
-                                            <td>
-                                                <a href="#"><button type="button" className="btn btn-info" id="ButtonMainPageTable">Принять участие</button></a>
-                                            </td>
-                                        </tr>
-                                    )
-                                }
-                            })
-                            }
-                        </tbody>
-                    </table>
-
-                </div>
-                <div className="container-fluid">
                     <h1>Завершенные события</h1>
                     <table className="table table-hover table-bordered" id="CompletedEvents">
                         <thead>
@@ -74,7 +38,7 @@
                                 var dateOfEnd = new Date(item.dateOfEnd);
                                 var today = new Date();
                                 if (dateOfEnd < today) {
-                                    var adr = "/Result/Completed/?IDCompetition=" + item.iD_Competition;
+                                    var adr = "/Result/MakeChanges/?IDCompetition=" + item.iD_Competition;
                                     return (
                                         <tr key={item.iD_Competition} >
                                             <td>{item.nameOfCompetition}</td>
@@ -82,7 +46,7 @@
                                             <td>{item.ageLimit}</td>
                                             <td>{item.dateOfStart} - {item.dateOfEnd}</td>
                                             <td>
-                                                <a href={adr}><button type="button" className="btn btn-info" id="ButtonMainPageTable">Посмотреть</button></a>
+                                                <a href={adr}><button type="button" className="btn btn-info" id="ButtonMainPageTable">Внести изменения</button></a>
                                             </td>
                                         </tr>
                                     )
@@ -110,7 +74,7 @@
                                 var dateOfEnd = new Date(item.dateOfEnd);
                                 var today = new Date();
                                 if (dateOfStart <= today && dateOfEnd >= today) {
-                                    var adr = "/Result/DetailedLive/?IDCompetition=" + item.iD_Competition;
+                                    var adr = "/Result/MakeChanges/?IDCompetition=" + item.iD_Competition;
                                     return (
                                         <tr key={item.iD_Competition} >
                                             <td>{item.nameOfCompetition}</td>
@@ -118,7 +82,7 @@
                                             <td>{item.ageLimit}</td>
                                             <td>Текущее (до: {item.dateOfEnd})</td>
                                             <td>
-                                                <a href={adr}><button type="button" className="btn btn-danger" id="ButtonMainPageTable">Посмотреть</button></a>
+                                                <a href={adr}><button type="button" className="btn btn-danger" id="ButtonMainPageTable">Внести изменения</button></a>
                                             </td>
                                         </tr>
                                     )
@@ -128,9 +92,9 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-        );
+            </div>    
+        )
     }
 }
 
-ReactDOM.render(<MainPageDesign requestAddress="/Home/GetCompetitions" />, document.getElementById('MainPageDiv'))
+ReactDOM.render(<AdminPanelDesign requestAddress="/Home/GetCompetitions" />, document.getElementById('AdminPanelRootDiv'))
