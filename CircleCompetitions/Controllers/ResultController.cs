@@ -175,13 +175,6 @@ namespace CircleCompetitions.Controllers
                 place++;
             }
             db.SaveChanges();
-            //int circleNum = db.Circle.FirstOrDefault(c => c.ID_Circle == CircleID).CircleNumber;
-            //foreach (Circle circle in db.Circle.Where(c => c.CircleNumber == circleNum).OrderBy(c => c.TimeOfCircle))
-            //{
-            //    circle.Place = place;
-            //    place++;
-            //}
-            /*Добавить сохранение и вызов следующего метода*/
         }
 
         /*Для расставления мест в стадиях*/
@@ -220,7 +213,6 @@ namespace CircleCompetitions.Controllers
                         }
                     }
                 }
-                /*Добавить сохранение и вызов следующего метода*/
             }
             db.SaveChanges();
         }
@@ -231,15 +223,29 @@ namespace CircleCompetitions.Controllers
             int place = 1;
             Dictionary<int, int> FirstPlaceCountForEachSportsman = new Dictionary<int, int>();
             /*Считаем, сколько первых мест занимали спортсмены в разных стадиях*/
-            foreach (Stage stage in db.Stage.Where(st => st.Competition_ID == CompetitionID && st.Place == 1).OrderBy(st=>st.Sportsman_ID))
+            foreach (Stage stage in db.Stage.Where(st => st.Competition_ID == CompetitionID))
             {
-                if (FirstPlaceCountForEachSportsman.ContainsKey(stage.Sportsman_ID))
+                if (stage.Place != 1)
                 {
-                    FirstPlaceCountForEachSportsman[stage.Sportsman_ID] += 1;
+                    if (FirstPlaceCountForEachSportsman.ContainsKey(stage.Sportsman_ID))
+                    {
+                        FirstPlaceCountForEachSportsman[stage.Sportsman_ID] += 0;
+                    }
+                    else
+                    {
+                        FirstPlaceCountForEachSportsman.Add(stage.Sportsman_ID, 0);
+                    }
                 }
                 else
                 {
-                    FirstPlaceCountForEachSportsman.Add(stage.Sportsman_ID, 1);
+                    if (FirstPlaceCountForEachSportsman.ContainsKey(stage.Sportsman_ID))
+                    {
+                        FirstPlaceCountForEachSportsman[stage.Sportsman_ID] += 1;
+                    }
+                    else
+                    {
+                        FirstPlaceCountForEachSportsman.Add(stage.Sportsman_ID, 1);
+                    }
                 }
             }
             foreach(var obj in FirstPlaceCountForEachSportsman.OrderBy(f => f.Value).Reverse())
