@@ -26,10 +26,12 @@
                     <table className="table table-hover table-bordered" id="FutureEvents">
                         <thead>
                             <tr>
-                                <th>Наименование</th>
+                                <th>Наименование</th>                               
+                                <th>Место проведения</th>
                                 <th>Вид соревнования</th>
-                                <th>Возрастное ограничение</th>
-                                <th>Даты проведения</th>
+                                <th>Возрастное ограничение</th>                        
+                                <th>Дата проведения</th>
+                                
                                 <th>                    </th>
                             </tr>
                         </thead>
@@ -38,15 +40,16 @@
                                 var dateOfStart = new Date(item.dateOfStart);
                                 var today = new Date();
                                 if (dateOfStart > today) {
-                                    var adr = "/Result/Completed/?CompetitionID=" + item.iD_Competition;
+                                    var adr = "/RegCompet/Index?ID_Competition=" + item.iD_Competition;
                                     return (
                                         <tr key={item.iD_Competition} >
                                             <td>{item.nameOfCompetition}</td>
+                                            <td>{item.place}</td>
                                             <td>{item.typeOfCompetition}</td>
                                             <td>{item.ageLimit}</td>
                                             <td>{item.dateOfStart}</td>
                                             <td>
-                                                <a href="#"><button type="button" className="btn btn-info" id="ButtonMainPageTable">Принять участие</button></a>
+                                                <a href={adr}><button type="button" className="btn btn-info" id="ButtonMainPageTable">Принять участие</button></a>
                                             </td>
                                         </tr>
                                     )

@@ -1,5 +1,5 @@
 ﻿class LoginForm extends React.Component {
-    render() {
+    render() {  
         return (
             <div className="container-fluid" id="LoginForm">
                 <form method="post">
@@ -14,6 +14,7 @@
                     <small id="ErrorMessage"></small>
                     <button type="submit" className="btn btn-primary">Войти</button>
                 </form>
+                <a href ="/Home/Register">Зарегистрироваться</a>
             </div>
         )
     }
