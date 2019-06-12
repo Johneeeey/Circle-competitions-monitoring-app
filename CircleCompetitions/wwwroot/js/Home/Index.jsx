@@ -26,11 +26,11 @@
                     <table className="table table-hover table-bordered" id="FutureEvents">
                         <thead>
                             <tr>
-                                <th>Наименование</th>
+                                <th>Наименование</th>                               
+                                <th>Место проведения</th>
                                 <th>Вид соревнования</th>
-                                <th>Возрастное ограничение</th>
-                                <th>Количество мест</th>
-                                <th>Даты проведения</th>
+                                <th>Возрастное ограничение</th>                        
+                                <th>Дата проведения</th>
                                 
                                 <th>                    </th>
                             </tr>
@@ -44,7 +44,7 @@
                                     return (
                                         <tr key={item.iD_Competition} >
                                             <td>{item.nameOfCompetition}</td>
-                                            <td>{item.Place}</td>
+                                            <td>{item.place}</td>
                                             <td>{item.typeOfCompetition}</td>
                                             <td>{item.ageLimit}</td>
                                             <td>{item.dateOfStart}</td>

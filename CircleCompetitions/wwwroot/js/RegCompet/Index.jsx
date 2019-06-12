@@ -21,7 +21,7 @@
                             <input type="text" name="Sex" />
                         </div>
                         <div>
-                            <label>Введите год рождения</label><br />
+                            <label>Введите дату рождения ГГГГ.ММ.ДД</label><br />
                             <input type="text" name="YearOfBirth" />
                         </div>
                         <div>
