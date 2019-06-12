@@ -12,6 +12,6 @@ namespace CircleCompetitions.Models
         public int ID_Result { get; set; }
         public int Competition_ID { get; set; }
         public int Sportsman_ID { get; set; }
-        public int Place { get; set; }
+        public int? Place { get; set; }
     }
 }

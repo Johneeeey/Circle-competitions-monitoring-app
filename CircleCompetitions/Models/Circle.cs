@@ -14,7 +14,7 @@ namespace CircleCompetitions.Models
         public int Competition_ID { get; set; }
         public int Sportsman_ID { get; set; }
         public int CircleNumber { get; set; }
-        public DateTime TimeOfCircle { get; set; }
-        public int Place { get; set; }
+        public DateTime? TimeOfCircle { get; set; }
+        public int? Place { get; set; }
     }
 }

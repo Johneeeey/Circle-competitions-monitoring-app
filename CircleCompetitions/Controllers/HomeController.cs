@@ -8,7 +8,8 @@ using CircleCompetitions.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
-using CircleCompetitions.Models;
+using CircleCompetitions.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace CircleCompetitions.Controllers
 {
@@ -32,6 +33,7 @@ namespace CircleCompetitions.Controllers
         public IActionResult Index()
         {
             return View();
+
         }
         [HttpGet]
         public IActionResult Login()
@@ -50,10 +52,39 @@ namespace CircleCompetitions.Controllers
             User user =  db.User.FirstOrDefault(u => u.E_Mail == EMail && u.Password == Password);
             if (user != null)
             {
-                await Authenticate(user);
+                await Authenticate(user);              
                 return RedirectToAction("Index", "Home");
             }
             return View("LoginError");
+        }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]    
+        public async Task<IActionResult> Register(RegisterModel model)
+        {
+            User us = await db.User.FirstOrDefaultAsync(u => u.E_Mail == model.Email);
+            if (us == null)
+            {
+                // добавляем пользователя в бд
+                db.User.Add(new User { UserName = model.Name, Nickname = model.Nickname, E_Mail = model.Email, Password = model.Password, RightsOfUser = Convert.ToString("User") });
+                await db.SaveChangesAsync();
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+
+            return View(model);
+        }
+        
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Home");
         }
 
 

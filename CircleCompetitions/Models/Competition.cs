@@ -12,8 +12,10 @@ namespace CircleCompetitions.Models
         public int ID_Competition { get; set; }
         public string NameOfCompetition { get; set; }
         public string TypeOfCompetition { get; set; }
-        public int AgeLimit { get; set; }
-        public DateTime DateOfStart { get; set; }
-        public DateTime DateOfEnd { get; set; }
+        public int StageCount { get; set; }
+        public int? AgeLimit { get; set; }
+        public int? PartLimit { get; set; }
+        public DateTime? DateOfStart { get; set; }
+        public DateTime? DateOfEnd { get; set; }
     }
 }

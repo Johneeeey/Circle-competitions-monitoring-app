@@ -28,7 +28,7 @@ namespace CircleCompetitions
 
             // установка конфигурации подключения
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie();
+              .AddCookie();
 
             services.AddMvc();
         }
