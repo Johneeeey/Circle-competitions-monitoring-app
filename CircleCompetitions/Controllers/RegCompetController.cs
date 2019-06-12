@@ -38,14 +38,14 @@ namespace CircleCompetitions.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string Name, string Surname, string Patronymic, char Sex, DateTime YearOfBirth, string Team)
+        public IActionResult Index(string Name, string Surname, string Patronymic, char Sex, DateTime YearOfBirth, string Team)
         {
-             
 
-                Sportsman sport = db.Sportsman.FirstOrDefault(u => u.SportsmanName == Name && u.SportsmanSurname == Surname && u.SpotrsmanPatronymic ==Patronymic &&
-                                                                    u.Sex == Sex && u.YearOfBirth == YearOfBirth && u.Team == Team);
-                //Если спортсмен есть уже в бд
-                if (sport != null)
+
+            Sportsman sport = db.Sportsman.FirstOrDefault(u => u.SportsmanName == Name && u.SportsmanSurname == Surname && u.SportsmanPatronymic == Patronymic &&
+                                                                 u.Sex == Sex && u.YearOfBirth == YearOfBirth && u.Team == Team);
+            //Если спортсмен есть уже в бд
+            if (sport != null)
                 {
                     int id = sport.ID_Sportsman;
                     List<Participant> Comp = db.Participant.Where(p => p.Competition_ID == Competition_ID).ToList();
@@ -61,13 +61,15 @@ namespace CircleCompetitions.Controllers
                     {
                         SportsmanName = Name,
                         SportsmanSurname =  Surname,
-                        SpotrsmanPatronymic =  Patronymic,
+                        SportsmanPatronymic =  Patronymic,
                         Sex =   Sex,
                         YearOfBirth =  YearOfBirth,
                         Team =  Team
                     });
-                    
-                    db.Participant.Add(new Participant { Competition_ID = Competition_ID, Sportsman_ID = sport.ID_Sportsman });
+                db.SaveChanges();//ЗДЕСЬ КОСЯК. ЧТО-ТО НЕ ТАК С ДАТОЙ. Я ПОМЕНЯЛ ТИП ПОЛЯ ДАТЫ В ПРЕДСТАВЛЕНИИ, ИБО НУЖЕН НЕ ПРОСТО ГОД
+                Sportsman sp = db.Sportsman.FirstOrDefault(u => u.SportsmanName == Name && u.SportsmanSurname == Surname && u.SportsmanPatronymic == Patronymic &&
+                                                               u.Sex == Sex && u.YearOfBirth == YearOfBirth && u.Team == Team);
+                    db.Participant.Add(new Participant { Competition_ID = Competition_ID, Sportsman_ID = sp.ID_Sportsman });
 
                 }
                 //Tаблица Result
@@ -90,7 +92,7 @@ namespace CircleCompetitions.Controllers
                     db.Circle.Add(new Circle { Competition_ID = Competition_ID, Sportsman_ID = sport.ID_Sportsman, Stage_ID = Stage_ID, CircleNumber = 1 });
                 }
 
-                await db.SaveChangesAsync();
+                db.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
             
         }

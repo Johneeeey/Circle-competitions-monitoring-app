@@ -33,7 +33,6 @@ namespace CircleCompetitions.Controllers
         public IActionResult Index()
         {
             return View();
-
         }
         [HttpGet]
         public IActionResult Login()

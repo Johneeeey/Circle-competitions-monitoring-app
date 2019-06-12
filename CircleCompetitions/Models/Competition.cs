@@ -11,6 +11,7 @@ namespace CircleCompetitions.Models
         [Key]
         public int ID_Competition { get; set; }
         public string NameOfCompetition { get; set; }
+        public string Place { get; set; }
         public string TypeOfCompetition { get; set; }
         public int StageCount { get; set; }
         public int? AgeLimit { get; set; }

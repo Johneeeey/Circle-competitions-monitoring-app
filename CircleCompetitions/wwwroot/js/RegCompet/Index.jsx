@@ -22,7 +22,7 @@
                         </div>
                         <div>
                             <label>Введите год рождения</label><br />
-                            <input type="number" name="YearOfBirth" />
+                            <input type="text" name="YearOfBirth" />
                         </div>
                         <div>
                             <label>Введите название команды</label><br />
